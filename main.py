@@ -1,7 +1,8 @@
 import copy
 
-
 global l
+
+
 class Task:
     def __init__(self, name, type, duration):
         self.name = name
@@ -18,10 +19,14 @@ class Task:
 def SJF(a, b, c, li):
     li = sorted(li, key=lambda l: l[2])
     print(li)
-    FCFS(a, b, c, li)
+    T = []
+    for i in range(n):
+        t = Task(li[i][0], li[i][1], li[i][2])
+        T.append(t)
+    FCFS(a, b, c, li, T)
 
 
-def FCFS(a, b, c, l):
+def FCFS(a, b, c, l, T):
     w = []
     j = 0
     while len(T) != 0:
@@ -98,6 +103,6 @@ if __name__ == '__main__':
         T.append(t)
 
     print("FCFS")
-    FCFS(A, B, C, copy.copy(l))
+    FCFS(A, B, C, copy.copy(l), T)
     print("SJF")
     SJF(A, B, C, copy.copy(l))
