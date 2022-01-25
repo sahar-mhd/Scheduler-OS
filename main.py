@@ -1,4 +1,7 @@
+import copy
 
+
+global l
 class Task:
     def __init__(self, name, type, duration):
         self.name = name
@@ -8,10 +11,17 @@ class Task:
         self.timeSpent = 0
 
     def print(self):
-        print(self.name + " " + self.type + " " + self.state + " " + str(self.timeSpent))
+        print(self.name + " " + self.type + " " +
+              self.state + " " + str(self.timeSpent))
 
 
-def FCFS(a, b, c):
+def SJF(a, b, c, li):
+    li = sorted(li, key=lambda l: l[2])
+    print(li)
+    FCFS(a, b, c, li)
+
+
+def FCFS(a, b, c, l):
     w = []
     j = 0
     while len(T) != 0:
@@ -88,4 +98,6 @@ if __name__ == '__main__':
         T.append(t)
 
     print("FCFS")
-    FCFS(A, B, C)
+    FCFS(A, B, C, copy.copy(l))
+    print("SJF")
+    SJF(A, B, C, copy.copy(l))
