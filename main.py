@@ -1,5 +1,7 @@
 import copy
 
+from numpy import array
+
 global l
 
 
@@ -15,18 +17,21 @@ class Task:
         print(self.name + " " + self.type + " " +
               self.state + " " + str(self.timeSpent))
 
-
+def HRRN(a, b, c, li):
+    pass
+        
 def SJF(a, b, c, li):
     li = sorted(li, key=lambda l: l[2])
     print(li)
+    
+    FCFS(a, b, c, li)
+
+
+def FCFS(a, b, c, l):
     T = []
     for i in range(n):
-        t = Task(li[i][0], li[i][1], li[i][2])
+        t = Task(l[i][0], l[i][1], l[i][2])
         T.append(t)
-    FCFS(a, b, c, li, T)
-
-
-def FCFS(a, b, c, l, T):
     w = []
     j = 0
     while len(T) != 0:
@@ -97,12 +102,12 @@ if __name__ == '__main__':
     for i in range(n):
         l.append(input().split(" "))
         l[i][2] = int(l[i][2])
-    T = []
-    for i in range(n):
-        t = Task(l[i][0], l[i][1], l[i][2])
-        T.append(t)
 
     print("FCFS")
-    FCFS(A, B, C, copy.copy(l), T)
+    FCFS(A, B, C, copy.copy(l))
+    print("______________________________")
     print("SJF")
     SJF(A, B, C, copy.copy(l))
+    print("______________________________")
+    print("HRRN")
+    HRRN(copy.copy(l))
