@@ -17,9 +17,11 @@ class Task:
         print(self.name + " " + self.type + " " +
               self.state + " " + str(self.timeSpent))
 
+
 def HRRN(a, b, c, li):
     pass
-        
+
+
 def SJF(a, b, c, li):
     li = sorted(li, key=lambda l: l[2])
     print(li)
@@ -95,6 +97,81 @@ def FCFS(a, b, c, l):
         j += 1
 
 
+def RR(a, b, c, l):
+    # q=1;
+    T = []
+    for i in range(n):
+        t = Task(l[i][0], l[i][1], l[i][2])
+        T.append(t)
+    w = []
+    j = 0
+    i = 0
+    while len(T) != 0:
+        i = i % len(T)
+        print("round " + str(j))
+        print("ready queue: " + str(l[j+1:]))
+        print("waiting queue: " + str(w))
+        if T[i].timeSpent != T[i].duration:
+            T[i].state = "running"
+            if T[i].type == 'X':
+                # resource A, B
+                if a > 0:
+                    a -= 1
+                else:
+                    w.append(T[i])
+                    T[0].state = "waiting"
+                if b > 0:
+                    b -= 1
+                else:
+                    w.append(T[i])
+                    T[i].state = "waiting"
+            elif T[i].type == "Y":
+                # resource B,C
+                if c > 0:
+                    c -= 1
+                else:
+                    w.append(T[i])
+                    T[0].state = "waiting"
+                if b > 0:
+                    b -= 1
+                else:
+                    w.append(T[i])
+                    T[i].state = "waiting"
+            else:
+                # resource A, C
+                if a > 0:
+                    a -= 1
+                else:
+                    w.append(T[i])
+                    T[i].state = "waiting"
+                if c > 0:
+                    c -= 1
+                else:
+                    w.append(T[i])
+                    T[i].state = "waiting"
+
+            print("A:" + str(a) + " B:" + str(b) + " C:" + str(c))
+            print("cpu state: ")
+            T[i].timeSpent += 1
+            T[i].print()
+            if T[i].type == 'X':
+                a += 1
+                b += 1
+            elif T[i].type == "Y":
+                b += 1
+                c += 1
+            else:
+                a += 1
+                c += 1
+            T[i].state = "ready"
+        if T[i].timeSpent == T[i].duration:
+            T.remove(T[i])
+        else:
+            l.append(l[i])
+            i += 1
+        j += 1
+
+
 if __name__ == '__main__':
     A, B, C = [int(x) for x in input().split(" ")]
     n = int(input())
@@ -110,4 +187,7 @@ if __name__ == '__main__':
     SJF(A, B, C, copy.copy(l))
     print("______________________________")
     print("HRRN")
-    HRRN(copy.copy(l))
+    #HRRN(copy.copy(l))
+    print("______________________________")
+    print("RR")
+    RR(A, B, C, copy.copy(l))
